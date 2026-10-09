@@ -1,5 +1,4 @@
 import { NavLink, useLocation } from "react-router-dom";
-import { cn } from "cn";
 
 function SidebarNavItem({ item }) {
 
