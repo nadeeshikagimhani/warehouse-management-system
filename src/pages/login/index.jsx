@@ -1,23 +1,23 @@
+import { useState } from "react"
+import { ArrowLeft, BarChart2Icon, Eye, EyeOff } from "lucide-react"
+import { Link } from "react-router-dom"
+
 import AuthLayout from "../../layouts/AuthLayout"
 
 import { Button } from "../../components/ui/button"
 import {
   Card,
-  CardAction,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "../../components/ui/card"
 import { Input } from "../../components/ui/input"
 import { Label } from "../../components/ui/label"
-import { useState } from "react"
-import { ArrowLeft, BarChart2Icon } from "lucide-react"
-import { Link } from "react-router-dom"
 
 const Login = () => {
 
+  const [showPassword, setShowPassword] = useState(false);
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -96,14 +96,32 @@ const Login = () => {
                     Forgot your password?
                   </a>
                 </div>
-                <Input
-                className="py-5"
-                id="password"
-                type="password"
-                name="password"
-                value={form.password}
-                onChange={handleChange}
-                required />
+                <div className="relative">
+                  <Input
+                  className="py-5"
+                  id="password"
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={form.password}
+                  placeholder="Enter your password"
+                  autoComplete="current-password"
+                  onChange={handleChange}
+                  required />
+
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="icon-sm"
+                    className="absolute right-1 top-1/2 -translate-y-1/2"
+                    onClick={() => setShowPassword((current) => !current)}
+                  >
+                    {showPassword ? (
+                      <EyeOff className="size-4" />
+                    ) : (
+                      <Eye className="size-4" />
+                    )}
+                  </Button>
+                </div>
               </div>
             </div>
 
