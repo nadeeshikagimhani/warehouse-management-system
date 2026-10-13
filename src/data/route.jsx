@@ -34,7 +34,7 @@ export const routes = [
     page: <StockSummary/>
   },
   {
-    route: "/return",
+    route: "/return-approvals",
     page: <ReturnApprovals/>
   }
 ]
