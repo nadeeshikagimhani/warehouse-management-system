@@ -3,7 +3,7 @@ import { sidebarNavigation } from '../../data/navItems'
 
 const Sidebar = () => {
   return (
-    <div className="flex flex-col w-60 border-r border-gray-400">
+    <div className="flex flex-col w-60 border-r border-gray-200">
       <SidebarHeader/>
       <SidebarNav items={sidebarNavigation}/>
       <SidebarProfile/>

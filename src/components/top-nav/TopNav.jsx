@@ -7,8 +7,8 @@ const TopNav = () => {
 
 
   return (
-    <div className="flex items-center justify-between px-10 md:px-30 h-16 bg-background">
-      <div className="font-bold text-xl cursor-pointer" onClick={() => navigate("/")}>StockFlow</div>
+    <div className="flex items-center justify-between px-10  h-16 bg-background border-b border-b-gray-200">
+      <div className="font-semibold text-lg cursor-pointer" onClick={() => navigate("/")}>StockFlow</div>
 
       <Button onClick={() => navigate("/login")}>Login</Button>
     </div>
