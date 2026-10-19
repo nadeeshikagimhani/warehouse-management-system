@@ -1,12 +1,26 @@
-import DefaultLayout from "../../layouts/DashboardLayout"
+import DashboardLayout from "../../layouts/DashboardLayout";
+import { distributionRuns } from "../../data/mock/distribution-runs";
 
+import DistributionRunsTable from "./com/DistributionRunsTable";
 
-const DistributionRuns = () => {
+function DistributionRuns() {
+  const closedRunCount = distributionRuns.filter((run) => run.status === "closed").length;
+  const activeRunCount = distributionRuns.length - closedRunCount;
+
   return (
-    <DefaultLayout>
-      Distribution Runs
-    </DefaultLayout>
-  )
+    <DashboardLayout>
+      <div className="mx-auto w-full space-y-5">
+        <div>
+          <h1 className="text-lg font-semibold">Distribution Runs</h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {activeRunCount} active runs — {closedRunCount} closed
+          </p>
+        </div>
+
+        <DistributionRunsTable />
+      </div>
+    </DashboardLayout>
+  );
 }
 
-export default DistributionRuns
+export default DistributionRuns;

@@ -1,12 +1,23 @@
-import DefaultLayout from "../../layouts/DashboardLayout"
+import DashboardLayout from "../../layouts/DashboardLayout";
+import { pendingStockRequests } from "../../data/mock/stock-requests";
 
+import StockRequestsTable from "./com/StockRequestsTable";
 
-const StockRequests = () => {
+function StockRequests() {
   return (
-    <DefaultLayout>
-      Stock Requests
-    </DefaultLayout>
-  )
+    <DashboardLayout>
+      <div className="mx-auto w-full space-y-5">
+        <div>
+          <h1 className="text-lg font-semibold">Stock Requests</h1>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {pendingStockRequests.length} pending requests awaiting decision
+          </p>
+        </div>
+
+        <StockRequestsTable />
+      </div>
+    </DashboardLayout>
+  );
 }
 
-export default StockRequests
+export default StockRequests;
