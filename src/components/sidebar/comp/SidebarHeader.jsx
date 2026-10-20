@@ -1,7 +1,7 @@
 import { BarChart2Icon } from "lucide-react"
 
 
-const SidebarHeader = () => {
+const SidebarHeader = ({ header }) => {
   return (
     <div className="flex gap-3 h-16 items-center px-5 border-b">
 
@@ -10,8 +10,8 @@ const SidebarHeader = () => {
       </div>
       
       <div className="leading-tight">
-        <p className="text-md font-semibold text-foreground">Stock Flow</p>
-        <p className="text-[11px] text-muted-foreground">Destribution System</p>
+        <p className="text-md font-semibold text-foreground">{header.title}</p>
+        <p className="text-[11px] text-muted-foreground">{header.subtitle}</p>
       </div>
 
     </div>
