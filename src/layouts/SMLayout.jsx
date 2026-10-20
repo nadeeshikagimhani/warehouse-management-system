@@ -2,7 +2,7 @@ import Sidebar from "../components/sidebar/Sidebar"
 import TopNav from "../components/top-nav/TopNav"
 import { sidebarNavigation, sidebarProfileSM, sidebarHeaderSM } from "../data/sidebars/sidebarNavSm"
 
-const DefaultLayout = ({ children }) => {
+const SMLayout = ({ children }) => {
   return (
     <div className="flex flex-row min-h-screen">
       <Sidebar nav={sidebarNavigation} profile={sidebarProfileSM} header={sidebarHeaderSM}/>
@@ -17,4 +17,4 @@ const DefaultLayout = ({ children }) => {
   )
 }
 
-export default DefaultLayout
+export default SMLayout

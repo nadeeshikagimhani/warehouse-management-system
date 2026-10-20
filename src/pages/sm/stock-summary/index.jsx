@@ -1,4 +1,4 @@
-import DefaultLayout from "../../../layouts/DashboardLayout"
+import SMLayout from "../../../layouts/SMLayout"
 import GreetingBanner from "./com/GreetingBanner"
 import MonthlyStockMovements from "./com/MonthlyStockMovements"
 import ProductStocks from "./com/ProductStocks"
@@ -8,13 +8,13 @@ import StockSummaryFilters from "./com/StockSummaryFilters"
 
 const StockSummary = () => {
   return (
-    <DefaultLayout>
+    <SMLayout>
       <StockSummaryFilters/>
       <GreetingBanner/>
       <StockOverview/>
       <MonthlyStockMovements/>
       <ProductStocks/>
-    </DefaultLayout>
+    </SMLayout>
   )
 }
 
