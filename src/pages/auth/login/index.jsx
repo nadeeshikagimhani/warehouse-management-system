@@ -1,118 +1,152 @@
-import { useState } from "react"
-import { ArrowLeft, BarChart2Icon, Eye, EyeOff } from "lucide-react"
-import { NavLink, Link } from "react-router-dom"
+import { useState } from "react";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
-import AuthLayout from "@/layouts/AuthLayout"
+import { Eye, EyeOff, ChartColumn, BarChart2Icon, ArrowLeft } from "lucide-react";
 
-import { Button } from "@/components/ui/button"
+import AuthLayout from "@/layouts/AuthLayout";
+
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+} from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { signInWithPassword } from "@/lib/auth";
 
-const Login = () => {
+const landingPageByRole = {
+  "stock-manager": "/",
+  "fdo": "/fdo",
+};
+
+function Login() {
+  const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [form, setForm] = useState({
     email: "",
     password: "",
   });
 
-  function handleChange(event){
-    const {name, value} = event.target
+  function handleChange(event) {
+    const { name, value } = event.target;
+
     setForm((currentForm) => ({
       ...currentForm,
       [name]: value,
     }));
+    setError("");
   }
 
-  function handleSubmit(event){
-    alert(JSON.stringify(form))
-  }
+  async function handleSubmit(event) {
+    event.preventDefault();
+    setError("");
+    setIsSubmitting(true);
 
+    try {
+      const user = await signInWithPassword(form);
+      const destination = user && landingPageByRole[user.role];
+
+      if (!destination) {
+        setError("Invalid email or password.");
+        return;
+      }
+
+      navigate(destination, { replace: true });
+    } catch {
+      setError("Unable to sign in. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  }
 
   return (
     <AuthLayout>
-
+      <div className="w-full max-w-md px-4">
       <div className="flex w-full max-w-sm items-center justify-between mb-8">
 
-          <div className="flex gap-3 items-centerborder-b">
+        <div className="flex gap-3 items-centerborder-b">
 
-            <div className="flex shadow-2xl justify-center items-center rounded-lg size-10 bg-[#e85831] text-white">
-              <BarChart2Icon className="size-6" strokeWidth={2.25}/>
-            </div>
-            
-            <div className="leading-tight">
-              <p className="text-md font-semibold text-foreground">Stock Flow</p>
-              <p className="text-[11px] text-muted-foreground">Destribution System</p>
-            </div>
-
+          <div className="flex shadow-2xl justify-center items-center rounded-lg size-10 bg-[#e85831] text-white">
+            <BarChart2Icon className="size-6" strokeWidth={2.25}/>
+          </div>
+          
+          <div className="leading-tight">
+            <p className="text-md font-semibold text-foreground">Stock Flow</p>
+            <p className="text-[11px] text-muted-foreground">Destribution System</p>
           </div>
 
+        </div>
+
         <Link to="/" className="flex gap-2">
-          <ArrowLeft className="size-5"/>
-          <span className="text-sm">Back to home</span>
+        <ArrowLeft className="size-5"/>
+        <span className="text-sm">Back to home</span>
         </Link>
 
-      </div>
+        </div>
 
-      <Card className="w-full max-w-sm">
+        <Card>
+          <CardHeader className="text-center mb-3">
+            <CardTitle className="text-2xl">Login</CardTitle>
 
-        <CardHeader className="text-center mb-5">
-          <CardTitle className="font-black text-2xl">Login</CardTitle>
-          <CardDescription>
-            Enter your email below to login to your account
-          </CardDescription>
-        </CardHeader>
+            <CardDescription>
+              Enter your credentials to access your account
+            </CardDescription>
+          </CardHeader>
 
-        <CardContent>
-          <form onSubmit={handleSubmit}>
-            <div className="flex flex-col gap-6">
-              <div className="grid gap-2">
+          <CardContent>
+            <form onSubmit={handleSubmit} className="space-y-5">
+              <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
+
                 <Input
                   id="email"
                   name="email"
                   type="email"
-                  placeholder="examplem@example.com"
-                  className="py-5"
-                  onChange={handleChange}
                   value={form.email}
+                  onChange={handleChange}
+                  placeholder="manager@stockflow.com"
+                  autoComplete="email"
                   required
                 />
               </div>
-              <div className="grid gap-2">
-                <div className="flex items-center">
+
+              <div className="space-y-2">
+                <div className="flex items-center justify-between">
                   <Label htmlFor="password">Password</Label>
-                  <a
-                    href="#"
-                    className="ml-auto inline-block text-sm underline-offset-4 hover:underline text-orange-400"
+
+                  <NavLink
+                    to="/forgot-password"
+                    className="text-xs font-medium text-orange-600 hover:underline"
                   >
-                    Forgot your password?
-                  </a>
+                    Forgot password?
+                  </NavLink>
                 </div>
+
                 <div className="relative">
                   <Input
-                  className="py-5"
-                  id="password"
-                  type={showPassword ? "text" : "password"}
-                  name="password"
-                  value={form.password}
-                  placeholder="Enter your password"
-                  autoComplete="current-password"
-                  onChange={handleChange}
-                  required />
+                    id="password"
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    value={form.password}
+                    onChange={handleChange}
+                    placeholder="Enter your password"
+                    autoComplete="current-password"
+                    className="pr-10"
+                    required
+                  />
 
                   <Button
                     type="button"
                     variant="ghost"
                     size="icon-sm"
                     className="absolute right-1 top-1/2 -translate-y-1/2"
+                    aria-label={showPassword ? "Hide password" : "Show password"}
                     onClick={() => setShowPassword((current) => !current)}
                   >
                     {showPassword ? (
@@ -123,33 +157,36 @@ const Login = () => {
                   </Button>
                 </div>
               </div>
-            </div>
 
-            <div className="flex-col gap-2 mt-10">
+              {error ? (
+                <p role="alert" className="text-sm text-destructive">
+                  {error}
+                </p>
+              ) : null}
+
               <Button
-              type="submit"
-              className="w-full bg-orange-500 py-5">
-                Confirm and Login
+                type="submit"
+                className="w-full bg-orange-500 py-5 hover:bg-orange-600"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Signing in..." : "Sign in"}
               </Button>
-            </div>
+            </form>
 
-            <div className="items-center flex justify-center mt-3">
-              <p>Don't have an account?
-                <NavLink to="/sign-up">
-                  <span className="ml-2 text-orange-500 cursor-pointer font-semibold">
-                    Sign Up
-                  </span>
-                </NavLink> 
-              </p>
-            </div>
-
-          </form>
-        </CardContent>
-
-     </Card>
-
+            <p className="mt-6 text-center text-sm text-muted-foreground">
+              New to StockFlow?{" "}
+              <NavLink
+                to="/sign-up"
+                className="font-medium text-orange-600 hover:underline"
+              >
+                Sign up
+              </NavLink>
+            </p>
+          </CardContent>
+        </Card>
+      </div>
     </AuthLayout>
-  )
+  );
 }
 
-export default Login
+export default Login;

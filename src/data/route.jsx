@@ -50,12 +50,12 @@ export const routes = [
   {
     route: "/fdo",
     title: "Stock Requests",
-    page: <Pages.FDOStockRequest/>
+    page: <Pages.FDOStockRequests/>
   },
   {
     route: "/fdo/stock-requests",
     title: "Stock Requests",
-    page: <Pages.FDOStockRequest/>
+    page: <Pages.FDOStockRequests/>
   },
   {
     route: "/fdo/distribution",

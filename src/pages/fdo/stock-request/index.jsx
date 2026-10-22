@@ -1,9 +1,17 @@
-import FDOLayout from "../../../layouts/FDOLayout"
+import FDOLayout from "@/layouts/FDOLayout";
 
-const FDOStockRequest = () => {
+import StockRequestsSection from "./com/request-list/StockRequestsSection";
+import StockSummaryCards from "./com/summary/StockSummaryCards";
+
+function FDOStockRequests() {
   return (
-    <FDOLayout>index</FDOLayout>
-  )
+    <FDOLayout>
+      <div className="mx-auto w-full max-w-6xl space-y-6">
+        <StockSummaryCards />
+        <StockRequestsSection />
+      </div>
+    </FDOLayout>
+  );
 }
 
-export default FDOStockRequest
+export default FDOStockRequests;

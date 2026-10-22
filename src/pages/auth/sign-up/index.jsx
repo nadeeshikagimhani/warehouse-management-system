@@ -178,7 +178,7 @@ function SignUp() {
 
               <Button
               type="submit"
-              className="w-full bg-orange-500 py-5">
+              className="w-full bg-orange-500 py-5 hover:bg-orange-600">
                 Sign Up
               </Button>
               {status ? (
