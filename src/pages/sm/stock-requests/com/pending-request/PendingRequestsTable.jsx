@@ -1,8 +1,8 @@
 import { Fragment, useState } from "react";
 import { ChevronDown, ChevronRight } from "lucide-react";
 
-import { Button } from "../../../../../components/ui/button";
-import { CardContent } from "../../../../../components/ui/card";
+import { Button } from "@/components/ui/button";
+import { CardContent } from "@/components/ui/card";
 import {
   Table,
   TableBody,
@@ -10,13 +10,12 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from "../../../../../components/ui/table";
-import { pendingStockRequests } from "../../../../../data/mock/stock-requests";
+} from "@/components/ui/table";
 
 import RequestStatusBadge from "../shared/RequestStatusBadge";
 import PendingRequestDetails from "./PendingRequestDetails";
 
-function PendingRequestsTable() {
+function PendingRequestsTable({ requests, onSendAllocation }) {
   const [expandedRequestId, setExpandedRequestId] = useState(null);
 
   function toggleRequest(requestId) {
@@ -26,6 +25,7 @@ function PendingRequestsTable() {
   }
 
   function handleRowKeyDown(event, requestId) {
+    if (event.target !== event.currentTarget) return;
     if (event.key === "Enter" || event.key === " ") {
       event.preventDefault();
       toggleRequest(requestId);
@@ -51,7 +51,7 @@ function PendingRequestsTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {pendingStockRequests.map((request) => {
+          {requests.map((request) => {
             const isExpanded = expandedRequestId === request.id;
             const detailsId = `pending-request-details-${request.id}`;
 
@@ -84,7 +84,7 @@ function PendingRequestsTable() {
                       type="button"
                       variant="ghost"
                       size="icon-sm"
-                      aria-label={`${isExpanded ? "Collapse" : "Expand"}${request.id}`}
+                      aria-label={`${isExpanded ? "Collapse" : "Expand"} ${request.id}`}
                       aria-expanded={isExpanded}
                       aria-controls={detailsId}
                       onClick={(event) => {
@@ -92,14 +92,14 @@ function PendingRequestsTable() {
                         toggleRequest(request.id);
                       }}
                     >
-                      {isExpanded ?<ChevronDown /> :<ChevronRight />}
+                      {isExpanded ? <ChevronDown /> : <ChevronRight />}
                     </Button>
                   </TableCell>
                 </TableRow>
                 {isExpanded ? (
                   <TableRow id={detailsId} className="hover:bg-transparent">
                     <TableCell colSpan={9} className="p-0 whitespace-normal">
-                      <PendingRequestDetails request={request} />
+                      <PendingRequestDetails request={request} onSendAllocation={onSendAllocation} />
                     </TableCell>
                   </TableRow>
                 ) : null}
