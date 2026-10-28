@@ -1,9 +1,12 @@
+import ClerkAuthProvider from "./providers/ClerkAuthProvider"
 import AppRouter from "./routing/AppRouter"
 
 const App = () => {
   return (
 
-    <AppRouter/>
+    <ClerkAuthProvider>
+      {<AppRouter/>}
+    </ClerkAuthProvider>
     
   )
 }
