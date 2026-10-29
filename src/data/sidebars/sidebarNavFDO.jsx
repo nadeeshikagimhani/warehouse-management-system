@@ -24,12 +24,6 @@ export const sidebarNavigationFDO = [
 
 ];
 
-export const sidebarProfileFDO = {
-  name: "Pasindu Lakshan",
-  role: "Field Distribution Officer",
-  detail: "pasindulakshan@gmail.com"
-}
-
 export const sidebarHeaderFDO = {
   title: "Stock Flow",
   subtitle: "FDO Portal",

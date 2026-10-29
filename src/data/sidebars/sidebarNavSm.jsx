@@ -31,12 +31,6 @@ export const sidebarNavigation = [
 
 ];
 
-export const sidebarProfileSM = {
-  name: "Nadeeshika Gimhani",
-  role: "Stock Manager",
-  detail: "ndgimhani4@gmail.com"
-}
-
 export const sidebarHeaderSM = {
   title: "Stock Flow",
   subtitle: "Distribution System",
